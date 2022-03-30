@@ -1,5 +1,7 @@
 package com.learning.rest.webservices.restfulwebservices.user;
 
+import javax.validation.Valid;
+
 import java.net.URI;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users")
-	public ResponseEntity<Object> addUser(@RequestBody User user) {
+	public ResponseEntity<Object> addUser(@Valid @RequestBody User user) {
 		User savedUser = userDaoService.save(user);
 
 		// setting status of CREATED = 201
