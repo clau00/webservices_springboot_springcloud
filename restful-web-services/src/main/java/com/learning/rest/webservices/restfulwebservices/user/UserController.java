@@ -5,7 +5,10 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import org.hibernate.EntityMode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -23,14 +26,19 @@ public class UserController {
 	}
 
 	@GetMapping("/users/{id}")
-	public User retrieveUser(@PathVariable int id) {
-		User searchedUser = userDaoService.findOne(id);
+	public EntityModel<User> retrieveUser(@PathVariable int id) {
+		User user = userDaoService.findOne(id);
 
-		if (searchedUser == null) {
+		if (user == null) {
 			throw new UserNotFoundException("id - " + id);
 		}
 
-		return searchedUser;
+		EntityModel<User> model = EntityModel.of(user);
+
+		WebMvcLinkBuilder linkToUsers = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).retrieveAllUsers());
+		model.add(linkToUsers.withRel("all-users"));
+
+		return model;
 	}
 
 	@PostMapping("/users")
