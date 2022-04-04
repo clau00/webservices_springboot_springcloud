@@ -1,12 +1,24 @@
 package com.learning.microservices.currencyexchangeservice;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 
+
+@Entity
 public class CurrencyExchange {
+
+    @Id
     private Long id;
+
+    @Column(name = "currency_from")
     private String from;
+
+    @Column(name = "currency_to")
     private String to;
-    private BigDecimal conversionMultipe;
+
+    private BigDecimal conversionMultiple;
     private String environment;
 
     public CurrencyExchange() {}
@@ -15,7 +27,7 @@ public class CurrencyExchange {
         this.id = id;
         this.from = from;
         this.to = to;
-        this.conversionMultipe = conversionMultipe;
+        this.conversionMultiple = conversionMultipe;
     }
 
     public Long getId() {
@@ -42,12 +54,12 @@ public class CurrencyExchange {
         this.to = to;
     }
 
-    public BigDecimal getConversionMultipe() {
-        return conversionMultipe;
+    public BigDecimal getConversionMultiple() {
+        return conversionMultiple;
     }
 
-    public void setConversionMultipe(BigDecimal conversionMultipe) {
-        this.conversionMultipe = conversionMultipe;
+    public void setConversionMultiple(BigDecimal conversionMultiple) {
+        this.conversionMultiple = conversionMultiple;
     }
 
     public String getEnvironment() {
